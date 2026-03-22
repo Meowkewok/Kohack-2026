@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 
 public class Search {
 
+    private String[] words;
     private String[] soyAllergens = FileReader.toStringArray("soy.txt");
     private String[] peanutAllergens = FileReader.toStringArray("peanut.txt");
     private String[] kosherAllergens = FileReader.toStringArray("kosher.txt");
@@ -14,7 +15,8 @@ public class Search {
     private boolean enableVegetarian = false;
 
 
-    public Search() {
+    public Search(String filename) {
+        getWordsFromRecipe(filename);
     }
 
     // Enables or diables the soy allergen check
@@ -46,50 +48,101 @@ public class Search {
         this.enableVegetarian = false;
     }
 
-    public boolean checkSoy(String filename) {
+    public void checkAllergens() {
+        if (enableSoy) {
+            if (checkSoy()) {
+                System.out.println("This recipe contains soy allergens.");
+            } else {
+                System.out.println("This recipe does not contain soy allergens.");
+            }
+        }
+        if (enablePeanuts) {
+            if (checkPeanuts()) {
+                System.out.println("This recipe contains peanut allergens.");
+            } else {
+                System.out.println("This recipe does not contain peanut allergens.");
+            }
+        }
+        if (enableKosher) {
+            if (checkKosher()) {
+                System.out.println("This recipe contains kashrut issues.");
+            } else {
+                System.out.println("This recipe does not contain kashrut issues.");
+            }
+        }
+        if (enableVegetarian) {
+            if (checkVegetarian()) {
+                System.out.println("This recipe contains vegetarian issues.");
+            } else {
+                System.out.println("This recipe does not contain vegetarian issues.");
+            }
+        }
+    }
+
+
+    private void getWordsFromRecipe(String filename) {
          try {
             // Read the entire file content into a String
             String content = new String(Files.readAllBytes(Paths.get(filename)));
             // Split by punctuation and whitespace
-            String[] words = content.split("[\\p{Punct}\\s]+");
-            // checks if any of the soy allergens are present in the words array      
-            for (int i = 0; i < soyAllergens.length; i++) {
-                for (int x = 0; x < words.length; x++) {
-                    if (words[x].toLowerCase().equals(soyAllergens[i])) {
-                        return true;
+            words = content.split("[\\p{Punct}\\s]+");
+            } catch (IOException e) {
+        }
+    }
+
+    private boolean checkSoy() {
+        // checks if any of the soy allergens are present in the words array      
+        for (String soyAllergen : soyAllergens) {
+            for (String word : words) {
+                if (word.toLowerCase().equals(soyAllergen)) {
+                    // returns true if a soy allergen is found
+                    return true;
                 }
             }
         }
-        } catch (IOException e) {
-            return false;
-        }
-        // returns false if no soy allergens are found or if there is an error reading the file
+        // returns false if no soy allergens are found
         return false;
     }
-    public boolean checkPeanuts(String filename) {
-         try {
-            // Read the entire file content into a String
-            String content = new String(Files.readAllBytes(Paths.get(filename)));
-            // Split by punctuation and whitespace
-            String[] words = content.split("[\\p{Punct}\\s]+");
-            // checks if any of the peanut allergens are present in the words array      
-            for (int i = 0; i < peanutAllergens.length; i++) {
-                for (int x = 0; x < words.length; x++) {
-                    if (words[x].toLowerCase().equals(peanutAllergens[i])) {
-                        return true;
-                }
-            }
-        }
-        } catch (IOException e) {
-            return false;
-        }
-        // returns false if no soy allergens are found or if there is an error reading the file
-        return false;
-    }
-
-
-
     
+    private boolean checkPeanuts() {
+        // checks if any of the peanut allergens are present in the words array
+        for (String peanutAllergen : peanutAllergens) {
+            for (String word : words) {
+                if (word.toLowerCase().equals(peanutAllergen)) {
+                    // returns true if a peanut allergen is found
+                    return true;
+                }
+            }
+        }
+        // returns false if no peanut allergens are found
+        return false;
+    }
 
-
+    private boolean checkKosher() {
+        // checks if any of the kosher "allergens" are present in the words array
+        for (String kosherAllergen : kosherAllergens) {
+            for (String word : words) {
+                if (word.toLowerCase().equals(kosherAllergen)) {
+                    // returns true if a kashrut issue is found
+                    return true;
+                }
+            }
+        }
+        // returns false if no kashrut issues are found
+        return false;
+    }
+    
+    private boolean checkVegetarian() {
+        // checks if any of the vegetarian "allergens" are present in the words array
+        for (String vegetarianAllergen : vegetarianAllergens) {
+            for (String word : words) {
+                if (word.toLowerCase().equals(vegetarianAllergen)) {
+                    // returns true if a vegetarian issue is found
+                    return true;
+                }
+            }
+        }
+        // returns false if no vegetarian issues are found
+        return false;
+    }
 }
