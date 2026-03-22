@@ -1,9 +1,8 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        Search search = new Search("Recipes.tt");
+        Search search = new Search("Recipes.txt");
         search.checkAllergens();
-        search.enableSoy();
-        search.enablePeanuts();
+        Input.getAllPrefrences(search);
         search.checkAllergens();
 
 
