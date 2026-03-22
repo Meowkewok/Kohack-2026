@@ -63,6 +63,28 @@ public class Search {
         // returns false if no soy allergens are found or if there is an error reading the file
         return false;
     }
+    public boolean checkSoy(String filename) {
+         try {
+            // Read the entire file content into a String
+            String content = new String(Files.readAllBytes(Paths.get(filename)));
+            // Split by punctuation and whitespace
+            String[] words = content.split("[\\p{Punct}\\s]+");
+            // checks if any of the soy allergens are present in the words array      
+            for (int i = 0; i < soyAllergens.length; i++) {
+                for (int x = 0; x < words.length; x++) {
+                    if (words[x].toLowerCase().equals(soyAllergens[i])) {
+                        return true;
+                }
+            }
+        }
+        } catch (IOException e) {
+            return false;
+        }
+        // returns false if no soy allergens are found or if there is an error reading the file
+        return false;
+    }
+
+
 
     
 
