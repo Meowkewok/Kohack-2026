@@ -4,20 +4,40 @@ import java.nio.file.Paths;
 
 public class Search {
 
+    // instance variable used to disable the allergen checks if the file is invalid
     private boolean disable = false;
+
+    // instance array of words from the recipe
     private String[] words;
+
+    // arrays of allergens for each category, read from text files
     private String[] soyAllergens = FileReader.toStringArray("soy.txt");
     private String[] peanutAllergens = FileReader.toStringArray("peanut.txt");
     private String[] kosherAllergens = FileReader.toStringArray("kosher.txt");
     private String[] vegetarianAllergens = FileReader.toStringArray("vegetarian.txt");
+    
+    // instance variables to enable or disable each allergen check based on user input
     private boolean enableSoy = false;
     private boolean enablePeanuts = false;
     private boolean enableKosher = false;
     private boolean enableVegetarian = false;
 
-
+    // instantiates a search object using a given file name and then calls the method to get the words from the recipe
     public Search(String filename) {
         getWordsFromRecipe(filename);
+    }
+
+    public String[] getSoyAllergens() {
+        return soyAllergens;
+    }
+    public String[] getPeanutAllergens() {
+        return peanutAllergens;
+    }
+    public String[] getKosherAllergens() {
+        return kosherAllergens;
+    }
+    public String[] getVegetarianAllergens() {
+        return vegetarianAllergens;
     }
 
     // Enables or diables the soy allergen check
@@ -49,6 +69,12 @@ public class Search {
         this.enableVegetarian = false;
     }
 
+    // returns the words array
+    public String[] getWords() {
+        return words;
+    }
+
+    // checks for allergens based on the user preferences and prints the results to the console
     public void checkAllergens() {
         if (!disable) {
             if (enableSoy) {
@@ -82,9 +108,10 @@ public class Search {
         }
     }
 
-
+    // reads the words from the given file and seperates them into an array
     private void getWordsFromRecipe(String filename) {
          try {
+            // checks if the file is a .txt file
             if (filename.contains(".txt")) {
                 // Read the entire file content into a String
                 String content = new String(Files.readAllBytes(Paths.get(filename)));
@@ -105,7 +132,7 @@ public class Search {
         }
     }
 
-    private boolean checkSoy() {
+    public boolean checkSoy() {
         // checks if any of the soy allergens are present in the words array      
         for (String soyAllergen : soyAllergens) {
             for (String word : words) {
@@ -119,7 +146,7 @@ public class Search {
         return false;
     }
     
-    private boolean checkPeanuts() {
+    public boolean checkPeanuts() {
         // checks if any of the peanut allergens are present in the words array
         for (String peanutAllergen : peanutAllergens) {
             for (String word : words) {
@@ -133,7 +160,7 @@ public class Search {
         return false;
     }
 
-    private boolean checkKosher() {
+    public boolean checkKosher() {
         // checks if any of the kosher "allergens" are present in the words array
         for (String kosherAllergen : kosherAllergens) {
             for (String word : words) {

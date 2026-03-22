@@ -80,5 +80,24 @@ public class Input {
             search.disableVegetarian();
             getVegetarianPreference(search);
         }
+    }
+    public static void options(Search search) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Do you want to edit your preferences? (y/n)");
+        String input = scanner.nextLine();
+        if (input.toLowerCase().equals("y")) {
+            // edit preferences
+            getAllPrefrences(search);
+        } else if (input.toLowerCase().equals("n")) {
+            // do nothing
+        } else {
+            System.out.println("Invalid input. Please enter 'y' or 'n'.");
+            options(search);
+        }
+    }
+    public static void close() {
+        // closes the scanner object
+        Scanner scanner = new Scanner(System.in);
+        scanner.close();
     } 
 }
