@@ -4,6 +4,7 @@ import java.nio.file.Paths;
 
 public class Search {
 
+    private boolean disable = false;
     private String[] words;
     private String[] soyAllergens = FileReader.toStringArray("soy.txt");
     private String[] peanutAllergens = FileReader.toStringArray("peanut.txt");
@@ -49,32 +50,34 @@ public class Search {
     }
 
     public void checkAllergens() {
-        if (enableSoy) {
-            if (checkSoy()) {
-                System.out.println("This recipe contains soy allergens.");
-            } else {
-                System.out.println("This recipe does not contain soy allergens.");
+        if (!disable) {
+            if (enableSoy) {
+                if (checkSoy()) {
+                    System.out.println("This recipe contains soy allergens.");
+                } else {
+                    System.out.println("This recipe does not contain soy allergens.");
+                }
             }
-        }
-        if (enablePeanuts) {
-            if (checkPeanuts()) {
-                System.out.println("This recipe contains peanut allergens.");
-            } else {
-                System.out.println("This recipe does not contain peanut allergens.");
+            if (enablePeanuts) {
+                if (checkPeanuts()) {
+                    System.out.println("This recipe contains peanut allergens.");
+                } else {
+                    System.out.println("This recipe does not contain peanut allergens.");
+                }
             }
-        }
-        if (enableKosher) {
-            if (checkKosher()) {
-                System.out.println("This recipe contains kashrut issues.");
-            } else {
-                System.out.println("This recipe does not contain kashrut issues.");
+            if (enableKosher) {
+                if (checkKosher()) {
+                    System.out.println("This recipe contains kashrut issues.");
+                } else {
+                    System.out.println("This recipe does not contain kashrut issues.");
+                }
             }
-        }
-        if (enableVegetarian) {
-            if (checkVegetarian()) {
-                System.out.println("This recipe contains vegetarian issues.");
-            } else {
-                System.out.println("This recipe does not contain vegetarian issues.");
+            if (enableVegetarian) {
+                if (checkVegetarian()) {
+                    System.out.println("This recipe contains vegetarian issues.");
+                } else {
+                    System.out.println("This recipe does not contain vegetarian issues.");
+                }
             }
         }
     }
@@ -82,10 +85,22 @@ public class Search {
 
     private void getWordsFromRecipe(String filename) {
          try {
-            // Read the entire file content into a String
-            String content = new String(Files.readAllBytes(Paths.get(filename)));
-            // Split by punctuation and whitespace
-            words = content.split("[\\p{Punct}\\s]+");
+            if (filename.contains(".txt")) {
+                // Read the entire file content into a String
+                String content = new String(Files.readAllBytes(Paths.get(filename)));
+                // Split by punctuation and whitespace
+                words = content.split("[\\p{Punct}\\s]+");
+                if (words.length == 0) {
+                    System.out.println("The file is empty or contains no valid words.");
+                }
+                if (words.length > 0) {
+                    System.out.println("Recipe loaded sucessfully.");
+                }
+            }
+            else {
+                System.out.println("Invalid file type. Please provide a .txt file.");
+                disable = true;
+            }
             } catch (IOException e) {
         }
     }
