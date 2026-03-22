@@ -1,6 +1,3 @@
-
-import java.io.File;
-
 public class Substitutes extends Search {
     
     private String[] soySubs = FileReader.toStringArray("soyReplacements.txt");
@@ -14,6 +11,14 @@ public class Substitutes extends Search {
         super(filename);
     }
     
+    public String substituteAll() {
+        String result = "";
+        result += substituteKosher() + "\n";
+        result += substituteVegetarian() + "\n";
+        result += substituteSoy() + "\n";
+        result += substitutePeanuts() + "\n";
+        return result;
+    }
     
     public String substituteKosher() {
         String result = "No kashrut issues found.";

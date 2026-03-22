@@ -10,8 +10,7 @@ public class App {
         //Input.close();
         Substitutes substitutes = new Substitutes("Recipes.txt");
         substitutes.enableSoy();
-        System.out.println(substitutes.substituteKosher());
-        System.out.println(substitutes.substituteVegetarian());
+        System.out.println(substitutes.substituteAll());
 
     }
 }
