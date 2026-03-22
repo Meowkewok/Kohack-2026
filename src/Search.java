@@ -5,6 +5,9 @@ import java.nio.file.Paths;
 public class Search {
 
     private String[] soyAllergens = FileReader.toStringArray("soy.txt");
+    private String[] peanutAllergens = FileReader.toStringArray("peanut.txt");
+    private String[] kosherAllergens = FileReader.toStringArray("kosher.txt");
+    private String[] vegetarianAllergens = FileReader.toStringArray("vegetarian.txt");
     private boolean enableSoy = false;
     private boolean enablePeanuts = false;
     private boolean enableKosher = false;
@@ -63,16 +66,16 @@ public class Search {
         // returns false if no soy allergens are found or if there is an error reading the file
         return false;
     }
-    public boolean checkSoy(String filename) {
+    public boolean checkPeanuts(String filename) {
          try {
             // Read the entire file content into a String
             String content = new String(Files.readAllBytes(Paths.get(filename)));
             // Split by punctuation and whitespace
             String[] words = content.split("[\\p{Punct}\\s]+");
-            // checks if any of the soy allergens are present in the words array      
-            for (int i = 0; i < soyAllergens.length; i++) {
+            // checks if any of the peanut allergens are present in the words array      
+            for (int i = 0; i < peanutAllergens.length; i++) {
                 for (int x = 0; x < words.length; x++) {
-                    if (words[x].toLowerCase().equals(soyAllergens[i])) {
+                    if (words[x].toLowerCase().equals(peanutAllergens[i])) {
                         return true;
                 }
             }
