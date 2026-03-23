@@ -27,6 +27,7 @@ public class Search {
         getWordsFromRecipe(filename);
     }
 
+    // returns the arrays of allergens for each category
     public String[] getSoyAllergens() {
         return soyAllergens;
     }
@@ -108,6 +109,7 @@ public class Search {
         }
     }
 
+    // returns a string of all the allergens found
     public String returnAllAllergens() {
         String result = "";
         if (!disable && enableSoy && checkSoy()) {
