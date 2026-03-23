@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.HashSet;
 
 public class Search {
 
@@ -10,12 +12,13 @@ public class Search {
     // instance array of words from the recipe
     private String[] words;
 
-    // arrays of allergens for each category, read from text files
-    private String[] soyAllergens = FileReader.toStringArray("soy.txt");
-    private String[] peanutAllergens = FileReader.toStringArray("peanut.txt");
-    private String[] kosherAllergens = FileReader.toStringArray("kosher.txt");
-    private String[] vegetarianAllergens = FileReader.toStringArray("vegetarian.txt");
-    
+    // Hashsets of allergens for each category, read from text files
+    // Hashsets made with help of ChatGPT and Google AI
+    private HashSet<String> soyAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("soy.txt")));
+    private HashSet<String> peanutAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("peanut.txt")));
+    private HashSet<String> kosherAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("kosher.txt")));
+    private HashSet<String> vegetarianAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("vegetarian.txt")));
+
     // instance variables to enable or disable each allergen check based on user input
     private boolean enableSoy = false;
     private boolean enablePeanuts = false;
@@ -29,16 +32,16 @@ public class Search {
 
     // returns the arrays of allergens for each category
     public String[] getSoyAllergens() {
-        return soyAllergens;
+        return soyAllergens.toArray(new String[0]);
     }
     public String[] getPeanutAllergens() {
-        return peanutAllergens;
+        return peanutAllergens.toArray(new String[0]);
     }
     public String[] getKosherAllergens() {
-        return kosherAllergens;
+        return kosherAllergens.toArray(new String[0]);
     }
     public String[] getVegetarianAllergens() {
-        return vegetarianAllergens;
+        return vegetarianAllergens.toArray(new String[0]);
     }
 
     // Enables or diables the soy allergen check
@@ -155,7 +158,7 @@ public class Search {
         // checks if any of the soy allergens are present in the words array      
         for (String soyAllergen : soyAllergens) {
             for (String word : words) {
-                if (word.toLowerCase().equals(soyAllergen)) {
+                if (soyAllergen.contains(word.toLowerCase())) {
                     // returns true if a soy allergen is found
                     return true;
                 }

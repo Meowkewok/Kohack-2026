@@ -13,7 +13,7 @@ public class GUI {
         // Create the frame (main window)
         JFrame frame = new JFrame("Allergen Alert");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 500/2);
+        frame.setSize(400, 250);
         
         // creation of a panel
         JPanel panel = new JPanel();
@@ -23,13 +23,6 @@ public class GUI {
 
         // button to activate the check function
         JButton button = new JButton("Check for selected allergens");
-        button.addActionListener(e -> {
-            substitutes.checkAllergens();
-            String results = substitutes.returnAllAllergens();
-            System.out.println("Results: " + results); // Check if results are empty
-            display.setText(results);
-            display.revalidate(); // Refresh the label to show the new text
-        });
 
         // checkbox for soy allergens
         JCheckBox soyBox = new JCheckBox("Filter for soy allergens");
@@ -69,6 +62,20 @@ public class GUI {
             } else {
                 substitutes.disableVegetarian();
             }
+        });
+
+
+        // action listener for the button to activate the check function and display the results
+        button.addActionListener(e -> {
+            substitutes.checkAllergens();
+            String results;
+            if (!soyBox.isSelected() && !peanutBox.isSelected() && !kashrutBox.isSelected() && !vegetarianBox.isSelected()) {
+                results = "No filters selected. Please select at least one filter.";
+            } else {
+                results = substitutes.returnAllAllergens();
+            }
+            display.setText(results);
+            display.revalidate(); // Refresh the label to show the new text
         });
 
         // Add the checkboxes, diplay panel and button to panel, then panel to the frame
