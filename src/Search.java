@@ -108,6 +108,23 @@ public class Search {
         }
     }
 
+    public String returnAllAllergens() {
+        String result = "";
+        if (!disable && enableSoy && checkSoy()) {
+            result += "Contains soy allergens. \n";
+        }
+        if (!disable && enablePeanuts && checkPeanuts()) {
+            result += "Contains peanut allergens. \n";
+        }
+        if (!disable && enableKosher && checkKosher()) {
+            result += "Contains kashrut issues. \n";
+        }
+        if (!disable && enableVegetarian && checkVegetarian()) {
+            result += "Contains vegetarian issues. \n";
+        }
+        return result;
+    }
+
     // reads the words from the given file and seperates them into an array
     private void getWordsFromRecipe(String filename) {
          try {
