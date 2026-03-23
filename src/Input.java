@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Input {
     
-    public static void getAllPrefrences(Search search) {
+    public static void getAllPreferences(Search search) {
         getSoyPreference(search);
         getPeanutPreference(search);
         getKashrutPreference(search);
@@ -10,7 +10,7 @@ public class Input {
     }
 
     public static void editPreferences(Search search) {
-        getAllPrefrences(search);
+        getAllPreferences(search);
     }
 
     private static void getSoyPreference(Search search) {
@@ -86,7 +86,7 @@ public class Input {
         String input = scanner.nextLine();
         if (input.toLowerCase().equals("y")) {
             // edit preferences
-            getAllPrefrences(search);
+            getAllPreferences(search);
         } else if (input.toLowerCase().equals("n")) {
             // do nothing
         } else {

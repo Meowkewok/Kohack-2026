@@ -3,6 +3,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 public class Search {
 
@@ -13,11 +14,12 @@ public class Search {
     private String[] words;
 
     // Hashsets of allergens for each category, read from text files
+    // uses linked hashsets to maintain the order of the allergens for the substitute suggestions
     // Hashsets made with help of ChatGPT and Google AI
-    private HashSet<String> soyAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("soy.txt")));
-    private HashSet<String> peanutAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("peanut.txt")));
-    private HashSet<String> kosherAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("kosher.txt")));
-    private HashSet<String> vegetarianAllergens = new HashSet<>(Arrays.asList(FileReader.toStringArray("vegetarian.txt")));
+    private LinkedHashSet<String> soyAllergens = new LinkedHashSet<>(Arrays.asList(FileReader.toStringArray("soy.txt")));
+    private LinkedHashSet<String> peanutAllergens = new LinkedHashSet<>(Arrays.asList(FileReader.toStringArray("peanut.txt")));
+    private LinkedHashSet<String> kosherAllergens = new LinkedHashSet<>(Arrays.asList(FileReader.toStringArray("kosher.txt")));
+    private LinkedHashSet<String> vegetarianAllergens = new LinkedHashSet<>(Arrays.asList(FileReader.toStringArray("vegetarian.txt")));
 
     // instance variables to enable or disable each allergen check based on user input
     private boolean enableSoy = false;
@@ -28,6 +30,22 @@ public class Search {
     // instantiates a search object using a given file name and then calls the method to get the words from the recipe
     public Search(String filename) {
         getWordsFromRecipe(filename);
+    }
+
+    public Search() {}
+
+    // returns the boolean enable values
+    public boolean getEnableSoy() {
+        return enableSoy;
+    }
+    public boolean getEnablePeanuts() {
+        return enablePeanuts;
+    }
+    public boolean getEnableKosher() {
+        return enableKosher;
+    }
+    public boolean getEnableVegetarian() {
+        return enableVegetarian;
     }
 
     // returns the arrays of allergens for each category
@@ -151,6 +169,19 @@ public class Search {
                 disable = true;
             }
             } catch (IOException e) {
+        }
+    }
+
+
+    // reads the words from the given file and seperates them into an array
+    public void getWordsFromString(String input) {
+        // Split by punctuation and whitespace
+        words = input.split("[\\p{Punct}\\s]+");
+        if (words.length == 0) {
+            System.out.println("The recipe is empty or contains no valid words.");
+        }
+        if (words.length > 0) {
+            System.out.println("Recipe loaded sucessfully.");
         }
     }
 
