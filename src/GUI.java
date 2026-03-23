@@ -10,7 +10,9 @@ import javax.swing.JTextArea;
 // Class made with the assistance of Google AI and Copilot
 
 public class GUI {
-    
+//     \(")/
+//     -( )- <- Its a bug
+//     /(_)\
     public static void makeGUI(Substitutes substitutes) {
         // Create the frame (main window)
         JFrame frame = new JFrame("Allergen Alert");

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-// class sourced from Code.org AP CSA curriculum
+// class sourced from Code.org AP CSA curriculum, modified to fit the needs of this project
 public class FileReader {
 
   // makes a string array from a file, splitting at newlines, and returns the array
@@ -20,31 +20,6 @@ public class FileReader {
     return data;
   }
 
-  // makes an int array from a file, splitting at newlines, and returns the array
-  public static int[] toIntArray(String filename) {
-    ArrayList<String> temp = readDataFromFile(filename);
-    int[] data = new int[temp.size()];
-
-    for (int index = 0; index < data.length; index++) {
-      String currentValue = temp.get(index);
-      data[index] = Integer.parseInt(currentValue);
-    }
-
-    return data;
-  }
-
-  // makes a double array from a file, splitting at newlines, and returns the array
-  public static double[] toDoubleArray(String filename) {
-    ArrayList<String> temp = readDataFromFile(filename);
-    double[] data = new double[temp.size()];
-
-    for (int index = 0; index < data.length; index++) {
-      String currentValue = temp.get(index);
-      data[index] = Double.parseDouble(currentValue);
-    }
-
-    return data;
-  }
   // creates a scanner object to read from a file and returns the scanner object
   private static Scanner createScanner(File theFile) {
     Scanner tempScanner = null;
